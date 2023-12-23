@@ -9,6 +9,9 @@ from models import Comment, Product, User
 from flask import request
 from flask_login import login_required, login_user, logout_user, current_user
 
+@app.route('/', methods=['POST', 'GET'])
+def home():
+    return render_template("index.html")
 
 @app.route('/', methods=['POST', 'GET'])
 def AddComment():

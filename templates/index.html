@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap" rel="stylesheet">
+    <title>Market of Game Accounts</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a href="#">CONTACT US</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-buttons">
+            {% if current_user.is_authenticated %}
+            <div class="header-user-dropdown">
+                <button class="header-logineduser">{{ current_user.username }}</button>
+                <ul class="header-options">
+                    <li><a class="header-account" href="account.html">Account</a></li>
+                    <li><a class="header-logout" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <button class="header-register"><a href="{{ url_for('register') }}">REGISTER</a></button>
+            <button class="header-login"><a href="{{ url_for('login') }}">Login</a></button>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <div class="main_game_info">
+            <img src="/static/gaming-gta5-wallpaper1 1.png" alt="gta5">
+            <p class="main_gtav">GTA</p>
+            <p class="main_v">V</p>
+            <p class="main_pr">PR.</p>
+            <p class="main_ed">ED</p>
+            <div class="desc">
+                <p class="main_desc">
+                    The game is the online component of Grand Theft
+                    Auto V. Set within the fictional state
+                    of San Andreas (based on Southern
+                    California), Grand Theft Auto Online allows up to
+                    30 players to explore its open world environment
+                    and engage in cooperative or competitive game matches.
+                </p>
+            </div>
+            <div class="main_buttons">
+                <button class="buy">BUY</button>
+                <button class="rate">⭐⭐⭐⭐⭐</button>
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="testing">
+                {{ form.hidden_tag() }}
+                {{ form.comment(class="comment-input", placeholder="დაამატეთ კომენტარი") }}
+                {{ form.name(class="name-input", placeholder="თქვენი სახელი") }}
+                {{ form.submit(class="post-comment") }}
+
+                <div class="comments-container">
+                    {% for comment in comments %}
+                    <p class="comment-entry testing-comment">
+                        <span class="name">{{ comment.name }}:</span>
+                        <span class="comment">{{ comment.comment }}</span>
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </form>
+
+
+
+
+        <div class="buyform">
+            <div class="form">
+                <input type="email" placeholder="მეილი">
+                <input type="number" placeholder="ანგარიშის ნომერი">
+                <button class="formbuy">BUY</button>
+            </div>
+        </div>
+
+
+    </main>
+
+    <script src="/static/main.js"></script>
+
+</body>
+
+</html>

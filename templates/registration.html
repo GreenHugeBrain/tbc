@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registration.css') }}">
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class="container">
+        <div class="registration-form">
+            <h2>Registration Form</h2>
+            <form method="POST" action="{{ url_for('register') }}">
+                {{ form.hidden_tag() }}
+                
+                <label for="username">{{ form.username.label }}</label>
+                {{ form.username(class="form-control") }}
+
+
+                <label for="password">{{ form.password.label }}</label>
+                {{ form.password(class="form-control") }}
+
+
+                <label for="repeat_password">{{ form.repeat_password.label }}</label>
+                {{ form.repeat_password(class="form-control") }}
+
+
+                <label for="gender">{{ form.gender.label }}</label>
+                {% for choice in form.gender %}
+                    {{ choice }}
+                {% endfor %}
+
+
+                <label for="birthday">{{ form.birthday.label }}</label>
+                {{ form.birthday(class="form-control") }}
+
+
+                <label for="country">{{ form.country.label }}</label>
+                {{ form.country(class="form-control") }}
+
+
+                <label for="email">{{ form.email.label }}</label>
+                {{ form.email(class="form-control") }}
+
+                {{ form.submitt }}
+            
+            </form>
+        </div>
+    </div>
+</body>
+</html>

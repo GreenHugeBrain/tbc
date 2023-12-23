@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+
+<body>
+
+    <nav>
+        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        <button class="navbar-toggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav ml-auto">
+            <div class="nav-item">
+                <a class="nav-link" href="{{ url_for('AddComment') }}">Home</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="edit-product-container">
+        <form class="inputs" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.name(class="name-input", placeholder="Product Name") }}
+            {{ form.img(class="image-input", accept='.jpeg, .jpg, .png') }}
+            {{ form.submit(class="submit-input") }}
+        </form>
+
+        <div class="product-container">
+            {% if product %}
+                <div class="product-card">
+                    <span class="name">{{ product.name }}</span>
+                    <img src="{{ url_for('static', filename=product.img) }}" alt="Product Image">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -99,6 +99,7 @@ nav {
 .product-card img {
     max-width: 100%;
     height: auto;
+    border: 10px;
 }
 
 

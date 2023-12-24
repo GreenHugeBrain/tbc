@@ -6,19 +6,37 @@ from ext import app, db
 from forms import AddCommentForm, AddProduct, EditProductForm, RegisterForm, LoginForm
 from werkzeug.utils import secure_filename
 from models import Comment, Product, User
-from flask import request
 from flask_login import login_required, login_user, logout_user, current_user
 
-
 @app.route('/', methods=['POST', 'GET'])
-def AddComment():
+def home():
+
+    return render_template("index.html")
+
+
+@app.route('/product1', methods=['POST', 'GET'])
+def product():
+    form = AddProduct()
+
+    products = Product.query.limit(12).all()
+
+    return render_template("productpage.html", form=form, products=products)
+
+
+@app.route('/feedback', methods=['POST', 'GET'])
+def Feedback():
     form = AddCommentForm()
     comments = Comment.query.all()
+
+    products = Product.query.all()
+
     if form.validate_on_submit():
         new_comment = Comment(name=form.name.data, comment=form.comment.data)
         new_comment.create()
-        return redirect('/')
-    return render_template("index.html", form=form, comments=comments)
+        return redirect('/feedback')
+
+    return render_template("feedback.html", form=form, comments=comments, products=products)
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -29,11 +47,9 @@ def register():
         if existing_user:
             flash('Username already exists. Please choose a different username.', 'danger')
         else:
-         if form.validate_on_submit():
-            new_user = User(username=form.username.data, password=form.username.data)
-            new_user.create()
-            flash('Your account has been created!', 'success')
-            return redirect('/login')
+                new_user = User(username=form.username.data, password=form.password.data)
+                new_user.create()
+                return redirect('/login')
 
     return render_template('registration.html', form=form)
 
@@ -52,15 +68,15 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.', 'success')
     return redirect('/')
 
 
 @app.route('/admindashboard', methods=['POST', 'GET'])
 @login_required
 def admindashboard():
-    if 'admin' in current_user.role:
+    if 'admin' in current_user.role:  
         form = AddProduct()
+        
         products = Product.query.all()
         if form.validate_on_submit():
             new_product = Product(name=form.name.data, img=form.img.data.filename)
@@ -68,12 +84,14 @@ def admindashboard():
 
             file_dir = path.join(app.root_path, "static", form.img.data.filename)
             form.img.data.save(file_dir)
+            
             return redirect("/admindashboard")
+            
         return render_template('admindashboard.html', form=form, products=products)
     else:
-        flash('You do not have permission to access the admin dashboard.', 'danger')
         return redirect('/')
-    
+
+        
 @app.route('/editproduct/<int:index>', methods=['POST', 'GET'])
 def edit_product(index):
     product = Product.query.get(index)
@@ -91,16 +109,14 @@ def edit_product(index):
                 form.img.data.save(file_dir)
 
             db.session.commit()
-            flash('Product updated successfully', 'success')
             return redirect("/admindashboard")
 
         form.name.data = product.name
 
         return render_template('admindashboard.html', form=form)
     else:
-        flash('Product not found', 'danger')
         return redirect('/admindashboard')
-    
+        
 @app.route('/removeproduct/<int:index>', methods=['POST', 'DELETE'])
 @login_required
 def remove_product(index):
@@ -108,8 +124,7 @@ def remove_product(index):
 
     if product:
         product.delete()
-        flash('Product removed successfully', 'success')
     else:
-        flash('Product not found', 'danger')
+        flash('You do not have permission to access the admin dashboard.', 'danger')
 
     return redirect("/admindashboard")

@@ -1,0 +1,35 @@
+{%extends 'productbase.html' %}
+    {% block products %}
+    <main>
+
+        <section class="products-section">
+            <h2>PRODUCTS</h2>
+            <div class="product-container">
+                {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ url_for('static', filename=product.img) }}" alt="Product Image">
+                    <div class="product-details">
+                        <span class="name">{{ product.name }}</span>
+                        {% if current_user.is_authenticated %}
+                        <button class="buy">BUY</button>
+                        {% else %}
+                        <button class="first-login">FIRST LOGIN</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="buyform">
+            <div class="form">
+                <input type="email" placeholder="მეილი">
+                <input type="number" placeholder="ანგარიშის ნომერი">
+                <button class="formbuy">BUY</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/static/main.js"></script>
+{% endblock %} 

@@ -1,0 +1,22 @@
+{% extends 'mainbase.html' %}
+
+{% block comments %}
+
+<form method="post">
+    <div class="testing">
+        {{ form.hidden_tag() }}
+        {{ form.comment(class="comment-input", placeholder="დაამატეთ კომენტარი") }}
+        {{ form.name(class="name-input", placeholder="თქვენი სახელი") }}
+        {{ form.submit(class="post-comment") }}
+
+        <div class="comments-container">
+            {% for comment in comments %}
+            <p class="comment-entry testing-comment">
+                <span class="name">{{ comment.name }}:</span>
+                <span class="comment">{{ comment.comment }}</span>
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/product.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian&display=swap" rel="stylesheet">
+    <title>Market of Game Accounts</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">HOME</a></li>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a href="#">CONTACT US</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-buttons">
+            {% if current_user.is_authenticated %}
+            <div class="header-user-dropdown">
+                <button class="header-logineduser">{{ current_user.username }}</button>
+                <ul class="header-options">
+                    <li><a class="header-logout" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <button class="header-register"><a href="{{ url_for('register') }}">REGISTER</a></button>
+            <button class="header-login"><a href="{{ url_for('login') }}">Login</a></button>
+            {% endif %}
+        </div>
+    </header>
+<main>
+    {% block products %} 
+    {% endblock %} 
+</main>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="https://www.tbcbank.ge/web/ka" target="_blank"><img src="/static/tbc.png" alt="Your Logo"></a>
+                <p>TBC</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('product') }}">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Tbilisi</p>
+                <p>Email: marketofgames@gmail.com</p>
+                <p>Phone: (+995) 564 434 464</p>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="https://www.facebook.com/tbcforyouth" target="_blank">Facebook</a>
+                <a href="https://www.tbcbank.ge/web/ka" target="_blank">TBC</a>
+                <a href="https://www.instagram.com/tbc_for_youth/" target="_blank">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Your Website. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

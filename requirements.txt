@@ -2,4 +2,9 @@ Flask
 Flask-WTF
 Flask-SQLAlchemy
 Flask-Login
+bcrypt
+Flask-Migrante
+os
+fileinput
+werkzeug.security
 gunicorn
